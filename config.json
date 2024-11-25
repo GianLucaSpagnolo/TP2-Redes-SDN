@@ -1,0 +1,19 @@
+{
+  "rules": [
+    {
+      "dst_port": 80,
+      "ip_type": "ipv4"
+    },
+    {
+      "src_ip": "10.0.0.1",
+      "dst_port": 5001,
+      "protocol": "UDP",
+      "ip_type": "ipv4"
+    },
+    {
+      "src_ip": "10.0.0.2",
+      "dst_ip": "10.0.0.4",
+      "ip_type": "ipv4"
+    }
+  ]
+}
