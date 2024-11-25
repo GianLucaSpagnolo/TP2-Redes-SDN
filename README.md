@@ -40,13 +40,11 @@ Se necesita como maximo version 3.9 de python, para esto crearemos un ambiente d
 Herramienta para pruebas de rendimiento
 
     sudo apt-get install iperf3
+
 ## Mininet
+
 Para levantar la topologia escribir en la terminal desde la carpeta padre:
 
-    sudo mn --custom topologia/topology.py --topo mytopo,ammount_switches=5,ip2=10.0.0.23  --mac
+    sudo mn --custom topology.py --topo mytopo,ammount_switches=5,ip2=10.0.0.23  --mac
 
 ammount_switches es la cantidad de switches en la topologia. Para definir la ip del host n escribir ipn=[ip deseada]
-
-
-
-    
