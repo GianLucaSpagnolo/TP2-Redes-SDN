@@ -6,12 +6,14 @@ from pox.core import core
 import pox.openflow.libopenflow_01 as of
 from pox.lib.revent import *
 from pox.lib.util import dpidToStr
-from pox.lib.addresses import EthAddr
-from collections import namedtuple
 from pox.lib.addresses import IPAddr
 import pox.lib.packet as pkt
-import os
 import json
+
+def read_field(rule, field):
+    if field in rule:
+        return rule[field]
+    return None
 
 # Add your imports here ...
 log = core.getLogger ()
@@ -25,16 +27,18 @@ class Firewall (EventMixin):
         
     def _handle_ConnectionUp (self , event):
         # Add your logic here ...
-        
+                
+        for rule in self.rules:
+            self.trafficRule(event, port=read_field(rule, "dst_port"), 
+                                    src_ip=read_field(rule, "src_ip"), 
+                                    dst_ip=read_field(rule, "dst_ip"), 
+                                    transport_protocol=read_field(rule, "transport_protocol"), 
+                                    ip_protocol=read_field(rule, "ip_version"))
+   
+        """
         host1 = "10.0.0.1"
         host2 = "10.0.0.2"
         host4 = "10.0.0.4"
-        
-        """ 
-        for rule in self.rules:
-            self.trafficRule(event, rule["port"], rule["src_ip"], rule["dest_ip"], rule["transport_protocol"], rule["ip_protocol"])
-   
-        """
     
         # Regla 1: Descartar mensajes con puerto destino 80
         self.trafficRule(event, port=80)
@@ -45,7 +49,9 @@ class Firewall (EventMixin):
         # Regla 3: Bloqueo de comunicacion entre 2 hosts cualquiera (bilateral).
         self.trafficRule(event, src_ip=host4, dest_ip=host2)
         self.trafficRule(event, src_ip=host2, dest_ip=host4)
-
+        
+        """
+        
     def trafficRule (self, event, port=None, src_ip=None, dst_ip=None, transport_protocol=None, ip_protocol=pkt.ethernet.IP_TYPE):
         rule = of.ofp_flow_mod()
         rule.match.dl_type = ip_protocol
