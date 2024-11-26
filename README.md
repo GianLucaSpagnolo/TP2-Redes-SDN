@@ -69,6 +69,10 @@ y luego ejecutar pox de siguendo l2 learning:
 
     ./pox/pox.py forwarding.l2_learning firewall
 
+- Flags opcionales
+
+    log.level -- DEBUG openflow.of_01
+
 ### 2.Topology
 
 Luego se debe levantar la topologia y escribir en la terminal desde la carpeta padre:
