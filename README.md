@@ -2,7 +2,23 @@
 
 Trabajo Práctico 2 de la materia Redes (TA048) - Software-Defined Networks
 
-## Instalacion de dependecias
+- [Redes-TP2-SDN](#redes-tp2-sdn)
+  - [Instalación](#instalación)
+    - [Mininet](#mininet)
+    - [Conda](#conda)
+      - [Download](#download)
+      - [Activation](#activation)
+      - [Enviroment creation](#enviroment-creation)
+    - [POX](#pox)
+    - [iPerf](#iperf)
+  - [Uso](#uso)
+    - [1.Controller](#1controller)
+    - [2.Topology](#2topology)
+    - [3.Test](#3test)
+      - [Instructivo para iPerf](#instructivo-para-iperf)
+      - [Reglas por default en config.json](#reglas-por-default-en-configjson)
+
+## Instalación
 
 ### Mininet
 
@@ -41,9 +57,9 @@ Herramienta para pruebas de rendimiento
 
     sudo apt-get install iperf3
 
-## Utilizacion del programa
+## Uso
 
-### 1. Levantar controlador de POX
+### 1.Controller
 
 Se debe copiar el codigo de firewall como un complemento externo de pox
 
@@ -51,29 +67,53 @@ Se debe copiar el codigo de firewall como un complemento externo de pox
 
 y luego ejecutar pox de siguendo l2 learning:
 
-    ./pox/pox.py log.level --DEBUG openflow.of_01 forwarding.l2_learning firewall
+    ./pox/pox.py forwarding.l2_learning firewall
 
-### 2. Levantar la topologia con mininet
+### 2.Topology
 
-Primero se debe levantar la topologia y escribir en la terminal desde la carpeta padre:
+Luego se debe levantar la topologia y escribir en la terminal desde la carpeta padre:
 
-    sudo mn --custom topology.py --topo mytopo,ammount_switches=5,ip2=10.0.0.23  --mac  --arp --switch ovsk --controller remote
+    sudo mn --custom topology.py --topo mytopo,ammount_switches=5 --mac --arp --switch ovsk --controller remote
 
-ammount_switches es la cantidad de switches en la topologia. Para definir la ip del host n escribir ipn=[ip deseada]
+- ammount_switches:  cantidad de switches en la topologia
+- ipn=[ip deseada]:  define la ip del host n
 
-### 3. Probar reglas del Firewall
+### 3.Test
 
-    - Regla 1: Descartar mensajes con puerto destino 80
-    
-        h3 iperf -u -c h2 -p 80 -> No recibe paquetes
-        h3 iperf -u -c h2 -p 100 (contraejemplo) 
+#### Instructivo para iPerf
 
-    - Regla 2: Descartar mensajes desde el host 1 al puerto 5001 usando UDP 
-    
+- **Server**
+
+    [host] iperf -s -p [port] &
+
+- **Client**
+
+    [src_host] iperf -c [dst_host] -p [port]
+
+- **Flags**:
+  - c : client
+  - s : server
+  - p : port
+  - u : UDP
+
+#### Reglas por default en config.json
+
+- **Regla 1**: Descartar mensajes con puerto destino 80  
+
+    No recibe paquetes
+
+        h3 iperf -c h2 -p 80 
+
+    Recibe paquetes
+
+        h3 iperf -c h2 -p 100 
+
+- **Regla 2**: Descartar mensajes desde el host 1 al puerto 5001 usando UDP  
+
         h4 iperf -u -s -p 5001 &
-        h1 iperf -u -c h4 -5001 
-    
-    - Regla 3: Bloqueo de comunicacion entre 2 hosts cualquiera (bilateral).
-    
-        h2 iperf -u -c h4 -p 1000
-        h4 iperf -u -c h2 -p 1000
+        h1 iperf -u -c h4 -5001
+
+- **Regla 3**: Bloqueo de comunicacion entre 2 hosts cualquiera (bilateral entre host2 y host4)
+
+        h2 iperf -c h4 -p 1000
+        h4 iperf -c h2 -p 1000
