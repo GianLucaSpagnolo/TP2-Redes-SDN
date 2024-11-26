@@ -10,6 +10,9 @@ from pox.lib.addresses import IPAddr
 import pox.lib.packet as pkt
 import json
 
+IPv4_CONFIG = "ipv4"
+UDP_PROTOCOL = "UDP"
+
 def read_field(rule, field):
     if field in rule:
         return rule[field]
@@ -52,13 +55,13 @@ class Firewall (EventMixin):
         
         """
         
-    def trafficRule (self, event, port=None, src_ip=None, dst_ip=None, transport_protocol=None, ip_protocol=pkt.ethernet.IP_TYPE):
+    def trafficRule (self, event, port=None, src_ip=None, dst_ip=None, transport_protocol=None, ip_protocol=IPv4_CONFIG):
         rule = of.ofp_flow_mod()
-        rule.match.dl_type = ip_protocol
+        rule.match.dl_type = pkt.ethernet.IP_TYPE if ip_protocol == IPv4_CONFIG else pkt.ethernet.IPV6_TYPE
         if port : rule.match.tp_dst = port
         if src_ip : rule.match.nw_src = IPAddr(src_ip)
         if dst_ip: rule.match.nw_dst = IPAddr(dst_ip)
-        if transport_protocol: rule.match.nw_proto = transport_protocol
+        if transport_protocol: rule.match.nw_proto = pkt.ipv4.UDP_PROTOCOL if transport_protocol == UDP_PROTOCOL else pkt.ipv4.TCP_PROTOCOL
         event.connection.send(rule)
         
         log.info("Firewall rule added: %s on switch %s" % rule, dpidToStr(event.dpid))
