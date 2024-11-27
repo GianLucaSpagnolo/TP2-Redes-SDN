@@ -9,6 +9,8 @@ Trabajo Práctico 2 de la materia Redes (TA048) - Software-Defined Networks
       - [Download](#download)
       - [Activation](#activation)
       - [Enviroment creation](#enviroment-creation)
+    - [Python 2.7](#python-27)
+  - [Without Conda](#without-conda)
     - [POX](#pox)
     - [iPerf](#iperf)
   - [Uso](#uso)
@@ -86,7 +88,7 @@ y luego ejecutar desde la base de pox, siguendo l2 learning:
 
 - Flags opcionales
 
-    log.level -- DEBUG openflow.of_01
+    python pox.py log.level -- DEBUG openflow.of_01 forwarding.l2_learning firewall
 
 ### 2.Topology
 
@@ -121,18 +123,25 @@ Luego, desde otra terminal, se debe levantar la topologia y escribir en la termi
 
     No recibe paquetes
 
-        h3 iperf -c h2 -p 80 
+        h3 iperf -u -c h2 -p 80 
 
     Recibe paquetes
 
-        h3 iperf -c h2 -p 100 
+        h3 iperf -u -c h2 -p 100 
 
 - **Regla 2**: Descartar mensajes desde el host 1 al puerto 5001 usando UDP  
 
+    No recibe paquetes
+
         h4 iperf -u -s -p 5001 &
-        h1 iperf -u -c h4 -5001
+        h1 iperf -u -c h4 -p 5001
+
+    Recibe paquetes
+
+        h3 iperf -s -p 1001 &
+        h1 iperf -c h3 -p 1001
 
 - **Regla 3**: Bloqueo de comunicacion entre 2 hosts cualquiera (bilateral entre host2 y host4)
 
-        h2 iperf -c h4 -p 1000
-        h4 iperf -c h2 -p 1000
+        h2 iperf -u -c h4 -p 1000
+        h4 iperf -u -c h2 -p 1000
