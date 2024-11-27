@@ -26,7 +26,7 @@ class Firewall (EventMixin):
     def __init__ (self):
         self.listenTo(core.openflow)
         self.setRules()
-        log.debug("Enabling␣Firewall␣Module")
+        log.debug("Enabling Firewall Module")
         
     def _handle_ConnectionUp (self , event):
         # Add your logic here ...
@@ -76,4 +76,3 @@ class Firewall (EventMixin):
     def launch ():
         # Starting the Firewall module
         core.registerNew(Firewall)
-        

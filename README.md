@@ -43,13 +43,25 @@ Trabajo Práctico 2 de la materia Redes (TA048) - Software-Defined Networks
     conda create --name py_2.7 python=2.7
     conda activate py_2.7
 
+### Python 2.7
+## Without Conda
+
+    wget https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tgz
+    tar xzf Python-2.7.18.tgz
+    cd Python-2.7.18
+    sudo ./configure --enable-optimizations
+    sudo make altinstall
+    sudo ln -s "/usr/local/bin/python2.7" "/usr/bin/python"
+
+
 ### POX
 
 Se necesita como maximo version 3.9 de python, para esto crearemos un ambiente de conda.
 
     git clone http://github.com/noxrepo/pox
     cd pox
-    git checkout ichthyosaur
+    git fetch --all
+    git checkout -b fangtooth origin/fangtooth
 
 ### iPerf
 
@@ -61,13 +73,16 @@ Herramienta para pruebas de rendimiento
 
 ### 1.Controller
 
-Se debe copiar el codigo de firewall como un complemento externo de pox
+Se debe copiar el codigo de firewall como un complemento externo de pox, desde la base del repo hacer
 
-    cp firewall.py pox/ext
+    cp firewall.py ~/<ruta_completa>/pox/ext
 
-y luego ejecutar pox de siguendo l2 learning:
+corroborar que la version de python sea la correcta:
+    python --version
 
-    ./pox/pox.py forwarding.l2_learning firewall
+y luego ejecutar desde la base de pox, siguendo l2 learning:
+
+    python pox.py forwarding.l2_learning firewall
 
 - Flags opcionales
 
@@ -75,7 +90,7 @@ y luego ejecutar pox de siguendo l2 learning:
 
 ### 2.Topology
 
-Luego se debe levantar la topologia y escribir en la terminal desde la carpeta padre:
+Luego, desde otra terminal, se debe levantar la topologia y escribir en la terminal desde la carpeta padre:
 
     sudo mn --custom topology.py --topo mytopo,ammount_switches=5 --mac --arp --switch ovsk --controller remote
 
