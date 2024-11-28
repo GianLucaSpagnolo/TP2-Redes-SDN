@@ -1,8 +1,18 @@
-# Redes-TP2-SDN
+# Trabajo Práctico 2 de Redes (TA048) - Software-Defined Networks (SDN)
 
-Trabajo Práctico 2 de la materia Redes (TA048) - Software-Defined Networks
+- Integrantes:
+  - Martín González Prieto - 105738
+  - Gian Luca Spagnolo - 108072
+  - Tomás Caporaletti - 108598
+  - Helen Elizabeth Chen - 110195
+  - Martín Osan - 109179
+- 2º Cuatrimestre 2024
+- Curso: 02-Alvarez Hamelin
 
-- [Redes-TP2-SDN](#redes-tp2-sdn)
+## Indice
+
+- [Trabajo Práctico 2 de Redes (TA048) - Software-Defined Networks (SDN)](#trabajo-práctico-2-de-redes-ta048---software-defined-networks-sdn)
+  - [Indice](#indice)
   - [Instalación](#instalación)
     - [Mininet](#mininet)
     - [Conda](#conda)
