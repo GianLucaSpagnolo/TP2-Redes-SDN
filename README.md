@@ -103,7 +103,7 @@ y luego ejecutar desde la base de pox, siguendo l2 learning:
 
 - Opcional con debugger
 
-    python pox/pox.py log.level -- DEBUG openflow.of_01 forwarding.l2_learning firewall
+        python pox/pox.py log.level -- DEBUG openflow.of_01 forwarding.l2_learning firewall
 
 ### 2.Topology
 
@@ -120,13 +120,14 @@ Luego, desde otra terminal, se debe levantar la topologia y escribir en la termi
 
 - **Server**
 
-    [host] iperf -s -p [port] &
+        [host] iperf -s -p [port] &
 
 - **Client**
 
-    [src_host] iperf -c [dst_host] -p [port]
+        [src_host] iperf -c [dst_host] -p [port]
 
 - **Flags**:
+  
   - c : client
   - s : server
   - p : port
@@ -162,5 +163,6 @@ Luego, desde otra terminal, se debe levantar la topologia y escribir en la termi
 
     No recibe paquetes
 
-        h2 iperf -u -c h4 -p 1000
-        h4 iperf -u -c h2 -p 1000
+        h2 iperf -u -c h4 -p 5001
+        h2 iperf -s -p 1001 &
+        h4 iperf -c h2 -p 1001
