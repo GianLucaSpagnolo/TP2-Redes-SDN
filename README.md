@@ -1,4 +1,6 @@
-# Trabajo Práctico 2 de Redes (TA048) - Software-Defined Networks (SDN)
+# Trabajo Práctico 2 de Redes (TA048) - SDN
+
+Implementación del Trabajo Practico Nº2: Software-Defined Networks
 
 - Integrantes:
   - Martín González Prieto - 105738
@@ -11,7 +13,7 @@
 
 ## Indice
 
-- [Trabajo Práctico 2 de Redes (TA048) - Software-Defined Networks (SDN)](#trabajo-práctico-2-de-redes-ta048---software-defined-networks-sdn)
+- [Trabajo Práctico 2 de Redes (TA048) - SDN](#trabajo-práctico-2-de-redes-ta048---sdn)
   - [Indice](#indice)
   - [Instalación](#instalación)
     - [Mininet](#mininet)
@@ -20,7 +22,7 @@
       - [Activation](#activation)
       - [Enviroment creation](#enviroment-creation)
     - [Python 2.7 (alternativa)](#python-27-alternativa)
-  - [Without Conda](#without-conda)
+      - [Sin usar Conda](#sin-usar-conda)
     - [POX](#pox)
     - [iPerf](#iperf)
   - [Uso](#uso)
@@ -57,7 +59,7 @@
 
 ### Python 2.7 (alternativa)
 
-## Without Conda
+#### Sin usar Conda
 
     wget https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tgz
     tar xzf Python-2.7.18.tgz
